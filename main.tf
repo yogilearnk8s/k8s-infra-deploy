@@ -9,9 +9,8 @@ terraform {
   backend "s3" {
     bucket = "yogi-tf"
     key    = "terraform-backend/yogitf.tf"
-    access_key = "AKIAQG3V54KZE2WSE77D"
-    secret_key = "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"
     region = "ap-south-1"
+    role_arn = "arn:aws:iam::014742839986:instance-profile/S3fullaccess"
   }
 }
 
