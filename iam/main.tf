@@ -1,13 +1,13 @@
-resource "aws_iam_instance_profile" "Jenkins_profile" {
-  name = "jenkins_profile"
-  role = aws_iam_role.jenkins_role.name
+resource "aws_iam_instance_profile" "k8s_profile" {
+  name = "k8s_profile"
+  role = aws_iam_role.k8s_role.name
 
   }
 
-resource "aws_iam_role" "jenkins_role" {
-  name = "jenkins_role"
+resource "aws_iam_role" "k8s_role" {
+  name = "k8s-infra-role"
   path = "/"
-  managed_policy_arns = [aws_iam_policy.s3_policy.arn]
+  managed_policy_arns = [aws_iam_policy.s3_policy_infra.arn]
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -25,8 +25,8 @@ resource "aws_iam_role" "jenkins_role" {
 EOF
 }
 
-resource "aws_iam_policy" "s3_policy" {
-  name = "policy-s3"
+resource "aws_iam_policy" "s3_policy_infra" {
+  name = "policy-s3-infra"
 
   policy = jsonencode({
     Version = "2012-10-17"

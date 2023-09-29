@@ -1,11 +1,11 @@
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-  config = {
-    bucket = "yogi-tf"
-    key = "terraform-backend/yogitf.tf"
-    region = "ap-south-1"
-  } 
-}
+//data "terraform_remote_state" "vpc" {
+ // backend = "s3"
+ // config = {
+ //   bucket = "yogi-tf"
+ //   key = "terraform-backend/yogitf.tf"
+ //   region = "ap-south-1"
+ // } 
+//}
 
 data "aws_vpc" "yogi-vpc"{
 

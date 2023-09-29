@@ -1,6 +1,5 @@
 provider "aws" {
   region     = "ap-south-1"
-
 }
 
 
@@ -9,7 +8,6 @@ terraform {
     bucket = "yogi-tf"
     key    = "terraform-backend/yogitf.tf"
     region = "ap-south-1"
-    role_arn = "arn:aws:iam::014742839986:instance-profile/S3fullaccess"
   }
 }
 
@@ -29,7 +27,7 @@ depends_on = ["module.subnet_creation"]
 
 module "route_creation" {
 source = "./route-table"
-depends_on = ["module.subnet_creation"]
+depends_on = ["module.internet_gateway"]
 }
 
 module "iam_instance_profile" {

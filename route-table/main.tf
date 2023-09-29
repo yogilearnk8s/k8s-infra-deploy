@@ -14,37 +14,61 @@ filter {
 
 }
 }
-
-data "aws_subnet_ids" "private-subnets" {
-  vpc_id = data.aws_vpc.yogi-vpc.id
+data aws_subnets "public-subnets" {
+ //vpc_id = data.aws_vpc.yogi-vpc.id
 
   filter {
-    name   = "tag:Name"
-    values = ["private-subnet-*"] 
+   name   = "vpc-id"
+   values = [data.aws_vpc.yogi-vpc.id]
+  }
+  tags = {
+   Name = "public-subnet-*"
+  }
+}
+
+data aws_subnets "private-subnets" {
+ //vpc_id = data.aws_vpc.yogi-vpc.id
+
+  filter {
+   name   = "vpc-id"
+   values = [data.aws_vpc.yogi-vpc.id]
+  }
+  tags = {
+   Name = "private-subnet-*"
   }
 }
 
 
-data "aws_subnet_ids" "public-subnets" {
-  vpc_id = data.aws_vpc.yogi-vpc.id
+//data "aws_subnet_ids" "private-subnets" {
+//  vpc_id = data.aws_vpc.yogi-vpc.id
 
-  filter {
-    name   = "tag:Name"
-    values = ["public-subnet-*"] 
-  }
-}
+//  filter {
+//    name   = "tag:Name"
+//    values = ["private-subnet-*"] 
+//  }
+//}
+
+
+//data "aws_subnet_ids" "public-subnets" {
+//  vpc_id = data.aws_vpc.yogi-vpc.id
+
+//  filter {
+//    name   = "tag:Name"
+//    values = ["public-subnet-*"] 
+//  }
+//}
 
 
 data "aws_subnet" "private-subnets" {
 //count = "${length(data.aws_subnet_ids.private-subnets.ids)}"
 count = "${length(var.private-subnet-cidr)}"
-id = "${tolist(data.aws_subnet_ids.private-subnets.ids)[count.index]}"
+id = "${tolist(data.aws_subnets.private-subnets.ids)[count.index]}"
 }
 
 data "aws_subnet" "public-subnets" {
 //count = "${length(data.aws_subnet_ids.public-subnets.ids)}"
 count = "${length(var.public-subnet-cidr)}"
-id = "${tolist(data.aws_subnet_ids.public-subnets.ids)[count.index]}"
+id = "${tolist(data.aws_subnets.public-subnets.ids)[count.index]}"
 }
 
 
