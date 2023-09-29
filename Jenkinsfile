@@ -12,7 +12,7 @@ pipeline {
  
     stage('terraform version') {
       steps {
-	    sh 'terraform init -reconfigure'
+	    sh 'terraform init -migrate-state'
         sh 'terraform --version'
 		sh 'terraform plan'
       }
